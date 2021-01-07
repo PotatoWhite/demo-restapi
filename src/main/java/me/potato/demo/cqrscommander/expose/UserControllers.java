@@ -30,22 +30,32 @@ public class UserControllers {
     Optional<User> save = null;
     try {
       save = userService.create(User.fromDto(createUserForm));
-      return save.map(user -> ResponseEntity.status(HttpStatus.CREATED).body(user.toDto()))
-                 .orElse(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
+      return save.map(user -> ResponseEntity.status(HttpStatus.CREATED)
+                                            .body(user.toDto()))
+                 .orElse(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                                       .build());
     } catch(EntityExistsException e) {
-      return ResponseEntity.status(HttpStatus.CONFLICT).build();
+      return ResponseEntity.status(HttpStatus.CONFLICT)
+                           .build();
     } catch(DataIntegrityViolationException e) {
-      return ResponseEntity.status(HttpStatus.CONFLICT).build();
+      return ResponseEntity.status(HttpStatus.CONFLICT)
+                           .build();
     }
   }
 
   @PutMapping("/{id}")
   public ResponseEntity updateUser(@PathVariable Long id, @RequestBody UserDto replace) {
     try {
-      return userService.replace(id, replace).map(user -> ResponseEntity.status(HttpStatus.OK).body(user.toDto()))
-                        .orElse(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
+      User target = User.fromDto(replace);
+      target.setId(id);
+      return userService.replace(target)
+                        .map(user -> ResponseEntity.status(HttpStatus.OK)
+                                                   .body(user.toDto()))
+                        .orElse(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                                              .build());
     } catch(EntityNotFoundException e) {
-      return ResponseEntity.noContent().build();
+      return ResponseEntity.noContent()
+                           .build();
     }
   }
 
@@ -53,8 +63,10 @@ public class UserControllers {
   public ResponseEntity updateUser(@PathVariable Long id, @RequestBody Map<String, Object> fields) {
     try {
       return userService.patch(id, fields)
-                        .map(user -> ResponseEntity.status(HttpStatus.OK).body(user))
-                        .orElse(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
+                        .map(user -> ResponseEntity.status(HttpStatus.OK)
+                                                   .body(user))
+                        .orElse(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                                              .build());
     } catch(EntityNotFoundException e) {
       return ResponseEntity.noContent()
                            .build();
@@ -67,14 +79,17 @@ public class UserControllers {
   @GetMapping("/{id}")
   public ResponseEntity getUser(@PathVariable Long id) {
     Optional<User> byId = userService.retrieve(id);
-    return byId.map(user -> ResponseEntity.status(HttpStatus.OK).body(user.toDto()))
-               .orElse(ResponseEntity.status(HttpStatus.NO_CONTENT).build());
+    return byId.map(user -> ResponseEntity.status(HttpStatus.OK)
+                                          .body(user.toDto()))
+               .orElse(ResponseEntity.status(HttpStatus.NO_CONTENT)
+                                     .build());
 
   }
 
   @DeleteMapping("/{id}")
   public ResponseEntity deleteUser(@PathVariable Long id) {
     userService.delete(id);
-    return ResponseEntity.noContent().build();
+    return ResponseEntity.noContent()
+                         .build();
   }
 }
