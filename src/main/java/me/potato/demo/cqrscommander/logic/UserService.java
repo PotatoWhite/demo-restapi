@@ -20,8 +20,8 @@ public class UserService {
   private final UserRepository userRepository;
 
   // create
-  public User create(User aUser) throws EntityExistsException {
-    return userRepository.save(aUser);
+  public Optional<User> create(User aUser) throws EntityExistsException {
+    return Optional.ofNullable(userRepository.save(aUser));
   }
 
   // retrieve
@@ -30,11 +30,11 @@ public class UserService {
   }
 
   // update
-  public User patch(Long id, Map<String, Object> fields) throws GsonTools.JsonObjectExtensionConflictException {
+  public Optional<User> patch(Long id, Map<String, Object> fields) throws GsonTools.JsonObjectExtensionConflictException {
     Optional<User> byId = userRepository.findById(id);
     var            user = byId.orElseThrow(() -> new EntityNotFoundException("entity not found id="+id));
 
-    return userRepository.save(GsonTools.merge(user, fields));
+    return Optional.ofNullable(userRepository.save(GsonTools.merge(user, fields)));
   }
 
   // delete
@@ -43,9 +43,9 @@ public class UserService {
   }
 
   // replace
-  public User replace(Long id, UserDto replace) {
+  public Optional<User> replace(Long id, UserDto replace) {
     User replaceUser = User.fromDto(replace);
     replaceUser.setId(id);
-    return userRepository.save(replaceUser);
+    return Optional.ofNullable(userRepository.save(replaceUser));
   }
 }
