@@ -1,4 +1,4 @@
-package me.potato.demo.cqrscommander.entities;
+package me.potato.cqrscommander.entities;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

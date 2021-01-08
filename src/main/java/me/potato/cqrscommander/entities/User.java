@@ -1,9 +1,11 @@
-package me.potato.demo.cqrscommander.entities;
+package me.potato.cqrscommander.entities;
 
 import lombok.Getter;
 import lombok.Setter;
-import me.potato.demo.cqrscommander.expose.dtos.UserDto;
-import me.potato.demo.cqrscommander.utils.JpaJsonConverter;
+import lombok.extern.slf4j.Slf4j;
+import me.potato.cqrscommander.expose.dtos.UserDto;
+import me.potato.cqrscommander.utils.JpaJsonConverter;
+import me.potato.pramework.entities.Eventable;
 
 import javax.persistence.*;
 import javax.validation.Valid;
@@ -13,6 +15,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Slf4j
 @Getter
 @Setter
 @Entity
@@ -20,7 +23,7 @@ import java.util.List;
                          @SecondaryTable(name = "user_contact"),
                          @SecondaryTable(name = "user_profile")
                  })
-public class User {
+public class User implements Eventable<Long> {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;

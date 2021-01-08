@@ -1,11 +1,22 @@
 spring:
+  application:
+    name: cqrs-commender
   datasource:
     url: jdbc:mariadb://localhost:3306/testdb
     username: test
     password: test
     driver-class-name: org.mariadb.jdbc.Driver
-
   jpa:
     hibernate:
       ddl-auto: create-drop
     show-sql: true
+  kafka:
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    bootstrap-servers: localhost:9092
+pramework:
+  entity-base-package: me.potato.cqrscommander.entities
+  topic-property:
+    number-of-replicas: 1
+    number-of-partitions: 1

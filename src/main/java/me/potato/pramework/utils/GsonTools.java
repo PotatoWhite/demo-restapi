@@ -1,9 +1,12 @@
-package me.potato.demo.cqrscommander.utils;
+package me.potato.pramework.utils;
 
 
 import com.google.gson.*;
 
 import java.util.Map;
+
+import static me.potato.pramework.utils.GsonTools.ArrayStrategy.REPLACE;
+import static me.potato.pramework.utils.GsonTools.ConflictStrategy.PREFER_SECOND_OBJ;
 
 public class GsonTools {
 
@@ -23,7 +26,7 @@ public class GsonTools {
         //conflict
         JsonElement leftVal = leftObj.get(rightKey);
         if(leftVal.isJsonArray() && rightVal.isJsonArray()) {
-          if(arrayStrategy == ArrayStrategy.REPLACE) {
+          if(arrayStrategy == REPLACE) {
             leftObj.remove(rightKey);
             leftObj.add(rightKey, rightVal);
           } else {
@@ -76,7 +79,7 @@ public class GsonTools {
                             .getAsJsonObject();
     JsonObject patch = gson.toJsonTree(fields)
                            .getAsJsonObject();
-    extendJsonObject(target, GsonTools.ConflictStrategy.PREFER_SECOND_OBJ, ArrayStrategy.REPLACE, patch);
+    extendJsonObject(target, PREFER_SECOND_OBJ, REPLACE, patch);
 
     return (T) gson.fromJson(target.toString(), obj.getClass());
   }

@@ -1,7 +1,6 @@
-package me.potato.demo.cqrscommander.logic;
+package me.potato.pramework;
 
-import lombok.RequiredArgsConstructor;
-import me.potato.demo.cqrscommander.utils.GsonTools;
+import me.potato.pramework.utils.GsonTools;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import javax.persistence.EntityExistsException;
@@ -9,9 +8,15 @@ import javax.persistence.EntityNotFoundException;
 import java.util.Map;
 import java.util.Optional;
 
-@RequiredArgsConstructor
+/**
+ * P-ramework(PostatoWhite)
+ * */
 public abstract class BaseService<T1, T2> {
   protected final JpaRepository<T1, T2> repository;
+
+  protected BaseService(JpaRepository<T1, T2> repository) {
+    this.repository = repository;
+  }
 
   // create
   public Optional<T1> create(T1 entity) throws EntityExistsException {
@@ -32,9 +37,15 @@ public abstract class BaseService<T1, T2> {
   }
 
   // delete
-  public void delete(T2 id) {
+  public void deleteById(T2 id) {
     repository.deleteById(id);
   }
+
+  // delete
+  public void delete(T1 entity) {
+    repository.delete(entity);
+  }
+
 
   // replace
   public Optional<T1> replace(T1 replace) {

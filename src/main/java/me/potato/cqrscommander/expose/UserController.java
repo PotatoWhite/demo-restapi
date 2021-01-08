@@ -1,11 +1,11 @@
-package me.potato.demo.cqrscommander.expose;
+package me.potato.cqrscommander.expose;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import me.potato.demo.cqrscommander.entities.User;
-import me.potato.demo.cqrscommander.expose.dtos.UserDto;
-import me.potato.demo.cqrscommander.logic.UserService;
-import me.potato.demo.cqrscommander.utils.GsonTools;
+import me.potato.cqrscommander.expose.dtos.UserDto;
+import me.potato.cqrscommander.entities.User;
+import me.potato.cqrscommander.logic.UserService;
+import me.potato.pramework.utils.GsonTools;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +21,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("users")
-public class UserControllers {
+public class UserController {
   private final UserService userService;
 
   @PostMapping
@@ -88,7 +88,7 @@ public class UserControllers {
 
   @DeleteMapping("/{id}")
   public ResponseEntity deleteUser(@PathVariable Long id) {
-    userService.delete(id);
+    userService.deleteById(id);
     return ResponseEntity.noContent()
                          .build();
   }

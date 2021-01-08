@@ -1,4 +1,4 @@
-package me.potato.demo.cqrscommander.utils;
+package me.potato.cqrscommander.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

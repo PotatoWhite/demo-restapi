@@ -1,4 +1,4 @@
-package me.potato.demo.cqrscommander;
+package me.potato.cqrscommander;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

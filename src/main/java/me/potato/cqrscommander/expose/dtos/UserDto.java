@@ -1,9 +1,9 @@
-package me.potato.demo.cqrscommander.expose.dtos;
+package me.potato.cqrscommander.expose.dtos;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import me.potato.demo.cqrscommander.entities.Address;
+import me.potato.cqrscommander.entities.Address;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
